@@ -174,11 +174,11 @@ export function BudgetApp() {
             {/* Tournament switcher bar */}
             <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 16 }}>
               {tournaments.length > 0 && (
-                <select value={tid ?? ""} onChange={(e) => select(e.target.value)} style={selectStyle} aria-label="Switch tournament">
-                  {tournaments.map((x) => <option key={x.id} value={x.id}>{x.name || "Untitled tournament"}</option>)}
+                <select value={tid ?? ""} onChange={(e) => select(e.target.value)} style={selectStyle} aria-label="Switch event">
+                  {tournaments.map((x) => <option key={x.id} value={x.id}>{x.name || "Untitled event"}</option>)}
                 </select>
               )}
-              <Btn outline onClick={newTournament} style={pill}>+ New Tournament</Btn>
+              <Btn outline onClick={newTournament} style={pill}>+ New Event</Btn>
               {t && isOwner && <Btn outline onClick={() => setShowInvite(true)} style={pill}>✉️ Invite</Btn>}
               {t && dataQ.data && !canEdit && <span style={{ color: C.yellow, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em" }}>👁️ View only</span>}
               <Btn outline color={C.muted} onClick={signOut} style={{ ...pill, marginLeft: "auto" }}>Sign out</Btn>
@@ -188,12 +188,12 @@ export function BudgetApp() {
               <>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
                   <div>
-                    <div style={{ color: C.muted, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 4 }}>⚽ Tournament Budget</div>
+                    <div style={{ color: C.muted, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 4 }}>⚽ Event Budget</div>
                     {editingName ? (
                       <input
                         autoFocus
                         value={nameDraft}
-                        placeholder="Tournament name"
+                        placeholder="Event name"
                         onChange={(e) => setNameDraft(e.target.value)}
                         onBlur={commitName}
                         onKeyDown={(e) => e.key === "Enter" && commitName()}
@@ -213,7 +213,7 @@ export function BudgetApp() {
                         }}
                         title={canEdit ? "Click to rename" : undefined}
                       >
-                        {t.name || "Name your tournament"}{canEdit ? " ✏️" : ""}
+                        {t.name || "Name your event"}{canEdit ? " ✏️" : ""}
                       </div>
                     )}
                   </div>
@@ -226,7 +226,7 @@ export function BudgetApp() {
                         <input
                           autoFocus type="number"
                           value={budgetDraft}
-                          placeholder="0"
+                         
                           onChange={(e) => setBudgetDraft(e.target.value)}
                           onBlur={commitBudget}
                           onKeyDown={(e) => e.key === "Enter" && commitBudget()}
@@ -282,9 +282,9 @@ export function BudgetApp() {
               boxShadow: `0 0 40px ${C.greenGlow}`,
             }}>
               <div style={{ fontSize: 40, marginBottom: 8 }}>⚽</div>
-              <div style={{ fontFamily: BEBAS, fontSize: 26, color: C.green, letterSpacing: "0.05em", marginBottom: 6 }}>No tournaments yet</div>
-              <div style={{ color: C.muted, fontSize: 14, marginBottom: 20 }}>Create your first tournament to start tracking its budget.</div>
-              <Btn onClick={newTournament}>+ New Tournament</Btn>
+              <div style={{ fontFamily: BEBAS, fontSize: 26, color: C.green, letterSpacing: "0.05em", marginBottom: 6 }}>No events yet</div>
+              <div style={{ color: C.muted, fontSize: 14, marginBottom: 20 }}>Create your first event to start tracking its budget.</div>
+              <Btn onClick={newTournament}>+ New Event</Btn>
             </div>
           </div>
         )}
@@ -472,18 +472,18 @@ export function BudgetApp() {
             )}
           </Field>
           <Field label="Description">
-            <Input value={expForm.label} onChange={(e) => setExpForm((f) => ({ ...f, label: e.target.value }))} placeholder="e.g. Field rental — Saturday" />
+            <Input value={expForm.label} onChange={(e) => setExpForm((f) => ({ ...f, label: e.target.value }))} />
           </Field>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <Field label="Budgeted ($)">
-              <Input type="number" value={expForm.budgeted} onChange={(e) => setExpForm((f) => ({ ...f, budgeted: e.target.value }))} placeholder="0.00" />
+              <Input type="number" value={expForm.budgeted} onChange={(e) => setExpForm((f) => ({ ...f, budgeted: e.target.value }))} />
             </Field>
             <Field label="Spent / Paid ($)">
-              <Input type="number" value={expForm.spent} onChange={(e) => setExpForm((f) => ({ ...f, spent: e.target.value }))} placeholder="0.00" />
+              <Input type="number" value={expForm.spent} onChange={(e) => setExpForm((f) => ({ ...f, spent: e.target.value }))} />
             </Field>
           </div>
           <Field label="Notes (optional)">
-            <Input value={expForm.notes} onChange={(e) => setExpForm((f) => ({ ...f, notes: e.target.value }))} placeholder="Any details..." />
+            <Input value={expForm.notes} onChange={(e) => setExpForm((f) => ({ ...f, notes: e.target.value }))} />
           </Field>
           <div style={{ display: "flex", gap: 8, justifyContent: "space-between" }}>
             {editExp && <Btn color={C.red} textColor="#fff" onClick={deleteExp}>Delete</Btn>}
@@ -522,18 +522,18 @@ export function BudgetApp() {
             )}
           </Field>
           <Field label="Description">
-            <Input value={incForm.label} onChange={(e) => setIncForm((f) => ({ ...f, label: e.target.value }))} placeholder="e.g. 8 teams × $200 entry" />
+            <Input value={incForm.label} onChange={(e) => setIncForm((f) => ({ ...f, label: e.target.value }))} />
           </Field>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <Field label="Expected ($)">
-              <Input type="number" value={incForm.expected} onChange={(e) => setIncForm((f) => ({ ...f, expected: e.target.value }))} placeholder="0.00" />
+              <Input type="number" value={incForm.expected} onChange={(e) => setIncForm((f) => ({ ...f, expected: e.target.value }))} />
             </Field>
             <Field label="Received ($)">
-              <Input type="number" value={incForm.received} onChange={(e) => setIncForm((f) => ({ ...f, received: e.target.value }))} placeholder="0.00" />
+              <Input type="number" value={incForm.received} onChange={(e) => setIncForm((f) => ({ ...f, received: e.target.value }))} />
             </Field>
           </div>
           <Field label="Notes (optional)">
-            <Input value={incForm.notes} onChange={(e) => setIncForm((f) => ({ ...f, notes: e.target.value }))} placeholder="e.g. 4 teams paid so far" />
+            <Input value={incForm.notes} onChange={(e) => setIncForm((f) => ({ ...f, notes: e.target.value }))} />
           </Field>
           <div style={{ display: "flex", gap: 8, justifyContent: "space-between" }}>
             {editInc && <Btn color={C.red} textColor="#fff" onClick={deleteInc}>Delete</Btn>}

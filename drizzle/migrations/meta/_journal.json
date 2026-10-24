@@ -15,6 +15,13 @@
       "when": 1792841965632,
       "tag": "0001_lock_tournament_owner",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792842416340,
+      "tag": "0002_event_wording_invite_errors",
+      "breakpoints": true
     }
   ]
 }
