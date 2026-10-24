@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode } from "react";
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 export const C = {
@@ -42,7 +42,7 @@ export function PitchStripes() {
 }
 
 // ── Animated number ───────────────────────────────────────────────────────────
-export function AnimNum({ value, prefix = "$", style: s }: { value: number; prefix?: string; style?: React.CSSProperties }) {
+export function AnimNum({ value, prefix = "$", style: s }: { value: number; prefix?: string; style?: CSSProperties }) {
   const [display, setDisplay] = useState(value);
   const prev = useRef(value);
   useEffect(() => {
