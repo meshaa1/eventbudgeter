@@ -47,7 +47,7 @@ export function ListManager({ kind, items, tid, run, onClose, onAdded, zIndex }:
           <EmptyState>{isCat ? "No categories yet. Add your first one below." : "No income sources yet. Add your first one below."}</EmptyState>
         )}
         {items.map((it) => (
-          <Row key={`${it.id}-${it.label}-${it.icon}-${"color" in it ? it.color : ""}`} item={it} isCat={isCat} run={run} />
+          <Row key={it.id} item={it} isCat={isCat} run={run} />
         ))}
       </div>
 
