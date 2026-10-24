@@ -311,7 +311,7 @@ export function BudgetApp() {
                   <div style={{ color: C.muted, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 14 }}>By Category</div>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 24px" }}>
                     {activeCategories.map((cat) => {
-                      const tt = catTotals[cat.id];
+                      const tt = totalsFor(cat.id);
                       const pct = (tt.spent / (tt.budgeted || 1)) * 100;
                       return (
                         <div key={cat.id}>
