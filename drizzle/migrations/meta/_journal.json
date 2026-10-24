@@ -8,6 +8,13 @@
       "when": 1792841582030,
       "tag": "0000_tournament_budget_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792841965632,
+      "tag": "0001_lock_tournament_owner",
+      "breakpoints": true
     }
   ]
 }
