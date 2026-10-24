@@ -27,6 +27,7 @@ export function ListManager({ kind, items, tid, run, onClose, onAdded, zIndex }:
   const [icon, setIcon] = useState("");
   const [label, setLabel] = useState("");
   const [color, setColor] = useState(C.green);
+  const [picking, setPicking] = useState(false);
 
   async function add() {
     if (!label.trim()) return;
@@ -55,11 +56,12 @@ export function ListManager({ kind, items, tid, run, onClose, onAdded, zIndex }:
         Add {isCat ? "category" : "source"}
       </div>
       <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-        <Input value={icon} onChange={(e) => setIcon(e.target.value)} placeholder="Icon" style={{ width: 64, textAlign: "center", padding: "10px 6px" }} />
+        <IconButton value={icon} open={picking} onClick={() => setPicking((p) => !p)} />
         <Input value={label} onChange={(e) => setLabel(e.target.value)} onKeyDown={(e) => e.key === "Enter" && add()} />
         {isCat && <input type="color" value={color} onChange={(e) => setColor(e.target.value)} style={colorInput} />}
         <Btn onClick={add} disabled={!label.trim()}>Add</Btn>
       </div>
+      {picking && <IconGrid value={icon} onPick={(v) => { setIcon(v); setPicking(false); }} />}
     </Modal>
   );
 }
@@ -89,12 +91,63 @@ function Row({ item, isCat, run }: { item: Item; isCat: boolean; run: Props["run
     void run(isCat ? supabase.from("categories").delete().eq("id", item.id) : supabase.from("income_sources").delete().eq("id", item.id));
   }
 
+  const [picking, setPicking] = useState(false);
+
   return (
-    <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-      <Input value={icon} onChange={(e) => setIcon(e.target.value)} onBlur={() => save({})} style={{ width: 64, textAlign: "center", padding: "10px 6px" }} />
-      <Input value={label} onChange={(e) => setLabel(e.target.value)} onBlur={() => save({})} onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()} />
-      {isCat && <input type="color" value={color} onChange={(e) => setColor(e.target.value)} onBlur={() => save({})} style={colorInput} />}
-      <button onClick={remove} title="Delete" style={{ background: "none", border: "none", color: C.red, cursor: "pointer", fontSize: 18, padding: "0 6px" }}>✕</button>
+    <div>
+      <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+        <IconButton value={icon} open={picking} onClick={() => setPicking((p) => !p)} />
+        <Input value={label} onChange={(e) => setLabel(e.target.value)} onBlur={() => save({})} onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()} />
+        {isCat && <input type="color" value={color} onChange={(e) => setColor(e.target.value)} onBlur={() => save({})} style={colorInput} />}
+        <button onClick={remove} title="Delete" style={{ background: "none", border: "none", color: C.red, cursor: "pointer", fontSize: 18, padding: "0 6px" }}>✕</button>
+      </div>
+      {picking && (
+        <IconGrid value={icon} onPick={(v) => { setIcon(v); setPicking(false); save({ icon: v }); }} />
+      )}
+    </div>
+  );
+}
+
+// ── Icon picker ───────────────────────────────────────────────────────────────
+const ICONS = [
+  "🏟️", "⚽", "🏀", "🏐", "🎾", "🏆", "🥇", "🎖️", "🟨", "🟥", "🥅", "👕",
+  "🍔", "🍕", "🍽️", "☕", "💧", "🥤", "🧊", "🍰",
+  "🩺", "🚑", "🧴", "🧹", "🔒", "🔧", "💡", "🔌", "🪑", "⛺",
+  "🚌", "🚗", "✈️", "🏨", "⛽", "🅿️",
+  "📣", "🖨️", "📸", "🎥", "🎤", "🎵", "🎈", "🎁", "🎨", "📱", "💻", "📦",
+  "💰", "💵", "💳", "🏦", "🤝", "🎟️", "🧾", "📝", "➕",
+];
+
+function IconButton({ value, open, onClick }: { value: string; open: boolean; onClick: () => void }) {
+  return (
+    <button type="button" onClick={onClick} title="Choose icon" style={{
+      width: 64, height: 40, flexShrink: 0, cursor: "pointer",
+      background: C.surface, border: `1px solid ${open ? C.green : C.border}`, borderRadius: 8,
+      color: value ? C.text : C.muted, fontSize: value ? 18 : 12, fontFamily: "inherit",
+    }}>
+      {value || "Icon ▾"}
+    </button>
+  );
+}
+
+function IconGrid({ value, onPick }: { value: string; onPick: (v: string) => void }) {
+  return (
+    <div style={{
+      display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(36px, 1fr))", gap: 4,
+      background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, padding: 8, marginTop: 6,
+    }}>
+      {ICONS.map((ic) => (
+        <button key={ic} type="button" onClick={() => onPick(ic)} style={{
+          height: 36, fontSize: 18, cursor: "pointer", borderRadius: 6,
+          background: value === ic ? C.green + "22" : "transparent",
+          border: `1px solid ${value === ic ? C.green : "transparent"}`,
+        }}>{ic}</button>
+      ))}
+      <button type="button" onClick={() => onPick("")} title="No icon" style={{
+        height: 36, fontSize: 12, cursor: "pointer", borderRadius: 6, color: C.muted, fontFamily: "inherit",
+        background: value === "" ? C.green + "22" : "transparent",
+        border: `1px solid ${value === "" ? C.green : "transparent"}`,
+      }}>None</button>
     </div>
   );
 }
