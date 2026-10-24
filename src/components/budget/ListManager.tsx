@@ -56,7 +56,7 @@ export function ListManager({ kind, items, tid, run, onClose, onAdded, zIndex }:
       </div>
       <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
         <Input value={icon} onChange={(e) => setIcon(e.target.value)} placeholder="Icon" style={{ width: 64, textAlign: "center", padding: "10px 6px" }} />
-        <Input value={label} onChange={(e) => setLabel(e.target.value)} onKeyDown={(e) => e.key === "Enter" && add()} placeholder={isCat ? "Category name" : "Source name"} />
+        <Input value={label} onChange={(e) => setLabel(e.target.value)} onKeyDown={(e) => e.key === "Enter" && add()} />
         {isCat && <input type="color" value={color} onChange={(e) => setColor(e.target.value)} style={colorInput} />}
         <Btn onClick={add} disabled={!label.trim()}>Add</Btn>
       </div>

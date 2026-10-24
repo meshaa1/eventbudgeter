@@ -11,10 +11,10 @@ export const Route = createFileRoute("/auth")({
   },
   head: () => ({
     meta: [
-      { title: "Sign in — Tournament Budget" },
-      { name: "description", content: "Sign in to manage your tournament budgets." },
-      { property: "og:title", content: "Sign in — Tournament Budget" },
-      { property: "og:description", content: "Sign in to manage your tournament budgets." },
+      { title: "Sign in — Event Budget" },
+      { name: "description", content: "Sign in to manage your event budgets." },
+      { property: "og:title", content: "Sign in — Event Budget" },
+      { property: "og:description", content: "Sign in to manage your event budgets." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -55,15 +55,15 @@ function AuthPage() {
         background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: 28,
         boxShadow: `0 0 60px ${C.greenGlow}`,
       }}>
-        <div style={{ color: C.muted, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 4 }}>⚽ Tournament Budget</div>
+        <div style={{ color: C.muted, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 4 }}>⚽ Event Budget</div>
         <h1 style={{ fontFamily: BEBAS, fontSize: 30, letterSpacing: "0.05em", color: C.white, textShadow: `0 0 30px ${C.greenGlow}`, margin: "0 0 20px", fontWeight: 400 }}>
           {mode === "signin" ? "Sign in" : "Create account"}
         </h1>
         <Field label="Email">
-          <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" autoComplete="email" />
+          <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
         </Field>
         <Field label="Password">
-          <Input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" autoComplete={mode === "signin" ? "current-password" : "new-password"} />
+          <Input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === "signin" ? "current-password" : "new-password"} />
         </Field>
         {msg && <div style={{ color: msg.ok ? C.green : C.red, fontSize: 12, marginBottom: 14 }}>{msg.text}</div>}
         <Btn type="submit" disabled={busy} style={{ width: "100%", marginBottom: 14 }}>

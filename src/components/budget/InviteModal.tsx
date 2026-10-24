@@ -22,7 +22,7 @@ export function InviteModal({ tid, onClose }: { tid: string; onClose: () => void
       ok: true,
       text: data === "added"
         ? `${email} now has access.`
-        : `Invite saved. ${email} will see this tournament after signing up and logging in with this email.`,
+        : `Invite saved. ${email} will see this event after signing up and logging in with this email.`,
     });
     setEmail("");
     qc.invalidateQueries({ queryKey: ["members", tid] });
@@ -31,7 +31,7 @@ export function InviteModal({ tid, onClose }: { tid: string; onClose: () => void
   return (
     <Modal title="Invite" icon="✉️" onClose={onClose}>
       <Field label="Email">
-        <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} onKeyDown={(e) => e.key === "Enter" && invite()} placeholder="name@example.com" />
+        <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} onKeyDown={(e) => e.key === "Enter" && invite()} />
       </Field>
       <Field label="Access">
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
