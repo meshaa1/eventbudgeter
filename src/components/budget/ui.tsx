@@ -62,7 +62,7 @@ export function AnimNum({ value, prefix = "$", style: s }: { value: number; pref
 }
 
 // ── Modal ─────────────────────────────────────────────────────────────────────
-export function Modal({ title, icon, onClose, children, zIndex = 200 }: { title: string; icon: string; onClose: () => void; children: ReactNode; zIndex?: number }) {
+export function Modal({ title, icon, onClose, children, zIndex = 200 }: { title: string; icon: string; onClose: () => void; children: ReactNode; zIndex?: number | undefined }) {
   return (
     <div
       style={{

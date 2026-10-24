@@ -143,12 +143,14 @@ export function BudgetApp() {
   const catTotals: Record<string, { budgeted: number; spent: number }> = {};
   categories.forEach((c) => { catTotals[c.id] = { budgeted: 0, spent: 0 }; });
   expenses.forEach((e) => {
-    if (e.category_id && catTotals[e.category_id]) {
-      catTotals[e.category_id].budgeted += Number(e.budgeted) || 0;
-      catTotals[e.category_id].spent += Number(e.spent) || 0;
+    const tot = e.category_id ? catTotals[e.category_id] : undefined;
+    if (tot) {
+      tot.budgeted += Number(e.budgeted) || 0;
+      tot.spent += Number(e.spent) || 0;
     }
   });
-  const activeCategories = categories.filter((c) => catTotals[c.id].budgeted > 0);
+  const totalsFor = (id: string) => catTotals[id] ?? { budgeted: 0, spent: 0 };
+  const activeCategories = categories.filter((c) => totalsFor(c.id).budgeted > 0);
 
   const selectStyle = {
     background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: 8,
